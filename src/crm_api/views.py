@@ -209,6 +209,8 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
         Sets automatically the support_contact to None.
         """
         contract = get_object_or_404(Contract, pk=self.kwargs['contract_pk'])
+        if contract.signed is False:
+            raise ValidationError("The contract needs to be signed in order to create an event.")
         if contract.sales_contact != self.request.user:
             raise ValidationError("You are not responsible for this contract.")
         else:
