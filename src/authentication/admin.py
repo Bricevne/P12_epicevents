@@ -6,7 +6,7 @@ from authentication.models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    """Class managing custom users in admin panel."""
+    """Defines how custom users appear in the admin panel."""
 
     list_display = ['id', 'first_name', 'last_name', "role"]
     list_filter = ["role"]

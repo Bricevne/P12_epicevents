@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomUser(AbstractUser):
-    """Custom user model to add a role attribute."""
-
+    """
+    Creates a custom staff user.
+    """
     class Role(models.TextChoices):
         SALES = 'SA', _('Sales')
         SUPPORT = 'SU', _('Support')
@@ -22,6 +23,11 @@ class CustomUser(AbstractUser):
         return f"{self.username} - {self.role}"
 
     def save(self, *args, **kwargs):
+        """
+        Saves the user's role depending on its group (sales, support, management).
+        Sets the newly created user to a staff member.
+        """
+
         self.is_staff = True
         super().save(*args, **kwargs)
         if self.role == "SA":
