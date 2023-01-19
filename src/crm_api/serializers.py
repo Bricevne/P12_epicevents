@@ -5,7 +5,7 @@ from crm_api.models import Client, Contract, Event
 
 
 class CustomUserListSerializer(ModelSerializer):
-    """User serializer for a list of users."""
+    """Serializes objects from :model:`authentication.CustomUser` for a list of users."""
 
     class Meta:
         model = CustomUser
@@ -13,7 +13,7 @@ class CustomUserListSerializer(ModelSerializer):
 
 
 class ClientListSerializer(ModelSerializer):
-    """Client serializer for a list of clients."""
+    """Serializes objects from :model:`crm_api.Client` for a list of clients."""
 
     class Meta:
         model = Client
@@ -21,7 +21,7 @@ class ClientListSerializer(ModelSerializer):
 
 
 class ClientDetailSerializer(ModelSerializer):
-    """Project serializer for a detail of a project."""
+    """Serializes objects from :model:`crm_api.Client` for the details of a client."""
 
     class Meta:
         model = Client
@@ -40,15 +40,14 @@ class ClientDetailSerializer(ModelSerializer):
         ]
 
     def get_contract(self, instance):
-        """Gets a list of comments for a particular issue."""
-
+        """Gets the list of existing contracts for a particular client."""
         queryset = instance.comment.all()
         serializer = ContractListSerializer(queryset, many=True)
         return serializer.data
 
 
 class ContractListSerializer(ModelSerializer):
-    """Project serializer for a list of projects."""
+    """Serializes objects from :model:`crm_api.Contract` for a list of contracts."""
 
     class Meta:
         model = Contract
@@ -56,7 +55,7 @@ class ContractListSerializer(ModelSerializer):
 
 
 class ContractDetailSerializer(ModelSerializer):
-    """Project serializer for a detail of a project."""
+    """Serializes objects from :model:`crm_api.Contract` for the details of a contract."""
 
     class Meta:
         model = Contract
@@ -73,15 +72,16 @@ class ContractDetailSerializer(ModelSerializer):
         ]
 
     def get_event(self, instance):
-        """Gets a list of comments for a particular issue."""
-
+        """Gets the list of existing events for a particular contract."""
         queryset = instance.event.all()
         serializer = EventListSerializer(queryset, many=True)
         return serializer.data
 
 
 class ContractSupportSerializer(ModelSerializer):
-    """Project serializer for a detail of a project."""
+    """Serializes objects from :model:`crm_api.Contract` for contracts when the
+    requesting user is from the support group.
+    """
 
     class Meta:
         model = Contract
@@ -91,16 +91,14 @@ class ContractSupportSerializer(ModelSerializer):
         ]
 
     def get_event(self, instance):
-        """Gets a list of comments for a particular issue."""
-
+        """Gets the list of existing events for a particular contract."""
         queryset = instance.event.all()
         serializer = EventListSerializer(queryset, many=True)
         return serializer.data
 
 
-
 class EventListSerializer(ModelSerializer):
-    """Project serializer for a list of projects."""
+    """Serializes objects from :model:`crm_api.Event` for a list of events."""
 
     class Meta:
         model = Event
@@ -108,7 +106,7 @@ class EventListSerializer(ModelSerializer):
 
 
 class EventDetailSerializer(ModelSerializer):
-    """Project serializer for a detail of a project."""
+    """Serializes objects from :model:`crm_api.Event` for the details of an event."""
 
     class Meta:
         model = Event

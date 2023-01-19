@@ -9,16 +9,16 @@ from crm_api.models import Client, Contract, Event
 
 
 class MultipleSerializerMixin:
-    """
-    Mixin allowing the change of a serializer_class in ViewSets.
-    """
+    """Allows the modification of a serializer_class in ViewSets."""
     detail_serializer_class = None
     support_serializer_class = None
 
     def get_serializer_class(self):
-        """
-        Replaces standard serializer_class by a detail_serializer_class when viewing an object detail.
-        """
+        """Replaces standard serializer_class by another serializer class.
+
+        support_serializer_class: When the requesting user is a support staff. (Only for contracts)
+        detail_serializer_class: When retrieving a particular serialized object.
+         """
         if self.support_serializer_class is not None and self.request.user.role == "SU":
             return self.support_serializer_class
         if self.action == 'retrieve' and self.detail_serializer_class is not None:
@@ -27,10 +27,11 @@ class MultipleSerializerMixin:
 
 
 class CustomUserViewset(MultipleSerializerMixin, ModelViewSet):
-    """
-    Class managing the following endpoints:
-    /projects
-    /projects/:project_id
+    """Displays users from :model:`authentication.CustomUser`.
+
+    Manages the following endpoints:
+    /users
+    /users/:user_id
     """
 
     serializer_class = serializers.CustomUserListSerializer
@@ -38,17 +39,16 @@ class CustomUserViewset(MultipleSerializerMixin, ModelViewSet):
     permission_classes = (DjangoModelPermissions,)
 
     def get_queryset(self):
-        """
-        Defines the queryset.
-        """
+        """Gets all users for every staff member."""
         return CustomUser.objects.all()
 
 
 class ClientViewset(MultipleSerializerMixin, ModelViewSet):
-    """
-    Class managing the following endpoints:
-    /projects
-    /projects/:project_id
+    """Displays clients from :model:`crm_api.Client`.
+
+    Manages the following endpoints:
+    /clients
+    /clients/:client_id
     """
 
     serializer_class = serializers.ClientListSerializer
@@ -57,12 +57,13 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
     http_method_names = ["get", "post", "patch"]
 
     def get_queryset(self):
+        """Gets the suitable queryset depending on the user's group.
+
+        Management and superusers: all clients.
+        Sales: all clients whose sales contact is the user.
+        Support: all clients whose event's support contact is the user.
         """
-        Defines the queryset.
-        """
-        if self.request.user.role == "M":
-            return Client.objects.all()
-        elif self.request.user.role == "SA":
+        if self.request.user.role == "SA":
             return Client.objects.filter(sales_contact=self.request.user)
         elif self.request.user.role == "SU":
             return Client.objects.filter(
@@ -76,16 +77,17 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
             return Client.objects.all()
 
     def perform_create(self, serializer):
-        """
-        Defines the creation [POST] of a project.
-        Automatically saves the corresponding author of the project.
+        """Defines the [POST] method for a client. Accessible only for sales staff.
+
+        Saves automatically the requesting user as the sales_contact of the client.
         """
         serializer.save(sales_contact=self.request.user)
 
     def perform_update(self, serializer):
-        """
-        Re-defines the modification [PATCH] of a contract.
-        Allows the change of the specified assignee user Foreign Key.
+        """Re-defines the [PATCH] method for a client. Accessible only for sales, management staff and superusers.
+
+        Modification: allows the change of the specified sales contact Foreign Key to another sales staff member.
+        Accessible only to management staff and superusers.
         """
         try:
             sales_contact_pk = serializer._kwargs['data']['sales_contact']
@@ -105,10 +107,13 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
 
 
 class ContractViewset(MultipleSerializerMixin, ModelViewSet):
-    """
-    Class managing the following endpoints:
-    /projects
-    /projects/:project_id
+    """Displays contracts from :model:`crm_api.Contract`.
+
+    Manages the following endpoints:
+    /clients/:client_id/contracts
+    /clients/:client_id/contracts/:contract_id
+
+    Limits contract information for support staff with ContractSupportSerializer.
     """
 
     serializer_class = serializers.ContractListSerializer
@@ -118,12 +123,13 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
     http_method_names = ["get", "post", "patch"]
 
     def get_queryset(self):
+        """Gets the suitable queryset depending on the user's group.
+
+        Management and superusers: all contracts from the client.
+        Sales: all contracts from the client whose sales contact is the user.
+        Support: contracts corresponding to the events they are responsible for. Allowed information: id only.
         """
-        Defines the queryset.
-        """
-        if self.request.user.role == "M":
-            return Contract.objects.filter(client_id=self.kwargs['client_pk'])
-        elif self.request.user.role == "SA":
+        if self.request.user.role == "SA":
             return Contract.objects.filter(client_id=self.kwargs['client_pk'], sales_contact=self.request.user)
         elif self.request.user.role == "SU":
             return Contract.objects.filter(
@@ -136,9 +142,10 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
             return Contract.objects.filter(client_id=self.kwargs['client_pk'])
 
     def perform_create(self, serializer):
-        """
-        Defines the creation [POST] of a project.
-        Automatically saves the corresponding author of the project.
+        """Defines the [POST] method for a contract. Accessible only for sales staff.
+
+        Saves automatically the requesting user as the sales_contact of the contract
+        if he is responsible for the client.
         """
         client = get_object_or_404(Client, pk=self.kwargs['client_pk'])
         if client.sales_contact != self.request.user:
@@ -147,9 +154,10 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
             serializer.save(sales_contact=self.request.user, client=client)
 
     def perform_update(self, serializer):
-        """
-        Re-defines the modification [PUT] of an issue.
-        Allows the change of the specified assignee user Foreign Key.
+        """Re-defines the [PATCH] method for a contract. Accessible only for sales, management staff and superusers.
+
+        Modification: allows the change of the specified sales contact Foreign Key to another sales staff member.
+        Accessible only to management staff and superusers.
         """
         try:
             sales_contact_pk = serializer._kwargs['data']['sales_contact']
@@ -169,10 +177,11 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
 
 
 class EventViewset(MultipleSerializerMixin, ModelViewSet):
-    """
-    Class managing the following endpoints:
-    /projects
-    /projects/:project_id
+    """Displays events from :model:`crm_api.Event`.
+
+    Manages the following endpoints:
+    /clients/:client_id/contracts/:contract_id/events
+    /clients/:client_id/contracts/:contract_id/events/:event_id
     """
 
     serializer_class = serializers.EventListSerializer
@@ -181,12 +190,13 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
     http_method_names = ["get", "post", "patch"]
 
     def get_queryset(self):
+        """Gets the suitable queryset depending on the user's group.
+
+        Management and superusers: all events associated to the contract.
+        Sales: none as they do not have group permissions to access events apart from creating them.
+        Support: all events (associated to the contract) whose support contact is the user.
         """
-        Defines the queryset.
-        """
-        if self.request.user.role == "M":
-            return Event.objects.filter(contract_id=self.kwargs['contract_pk'])
-        elif self.request.user.role == "SU":
+        if self.request.user.role == "SU":
             return Event.objects.filter(contract_id=self.kwargs['contract_pk'], support_contact=self.request.user)
         elif self.request.user.role == "SA":
             return Event.objects.none()
@@ -194,9 +204,9 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
             return Event.objects.filter(contract_id=self.kwargs['contract_pk'])
 
     def perform_create(self, serializer):
-        """
-        Defines the creation [POST] of a project.
-        Automatically saves the corresponding author of the project.
+        """Defines the [POST] method for an event. Accessible only for sales staff.
+
+        Sets automatically the support_contact to None.
         """
         contract = get_object_or_404(Contract, pk=self.kwargs['contract_pk'])
         if contract.sales_contact != self.request.user:
@@ -205,9 +215,10 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
             serializer.save(support_contact=None, contract=contract)
 
     def perform_update(self, serializer):
-        """
-        Re-defines the modification [PUT] of an issue.
-        Allows the change of the specified assignee user Foreign Key.
+        """Re-defines the [PATCH] method for a contract. Accessible only for support, management staff and superusers.
+
+        Modification: allows the change of the specified support_contact Foreign Key to another support staff member.
+        Accessible only to management staff and superusers.
         """
         try:
             support_contact_pk = serializer._kwargs['data']['support_contact']

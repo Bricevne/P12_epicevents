@@ -5,8 +5,7 @@ from eventmanager import settings
 
 
 class Client(models.Model):
-    """Class managing clients."""
-
+    """Stores a client, related to :model:`authentication.CustomUser`."""
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
     email = models.CharField(max_length=100)
@@ -18,12 +17,11 @@ class Client(models.Model):
     sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.company_name}"
+        return f"{self.id}. {self.first_name} {self.last_name} - {self.company_name}"
 
 
 class Contract(models.Model):
-    """Class managing contracts."""
-
+    """Stores a contract, related to :model:`authentication.CustomUser`and :model:`crm_api.Client`."""
     amount = models.IntegerField()
     payment_due = models.DateField()
     signed = models.BooleanField(default=False)
@@ -39,7 +37,7 @@ class Contract(models.Model):
 
 
 class Event(models.Model):
-    """Class managing events."""
+    """Stores an event, related to :model:`authentication.CustomUser`and :model:`crm_api.Contract`."""
 
     class Status(models.TextChoices):
         TO_DO = 'T', _('To do')
@@ -59,4 +57,4 @@ class Event(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.title} - {self.status}"
+        return f"{self.id}. {self.title} - {self.status}"
