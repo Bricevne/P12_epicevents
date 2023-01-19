@@ -46,7 +46,7 @@ class ClientAdmin(admin.ModelAdmin):
 class ContractAdmin(admin.ModelAdmin):
     """Class managing contracts in admin panel."""
 
-    list_display = ("amount", "payment_due", "signed", "sales_contact", "client",)
+    list_display = ("id", "amount", "payment_due", "signed", "sales_contact", "client",)
     list_filter = ("sales_contact", "client",)
     search_fields = ("sales_contact",)
 
@@ -77,7 +77,7 @@ class ContractAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     """Class managing events in admin panel."""
 
-    list_display = ("title", "status", "event_date", "support_contact", "contract", "client")
+    list_display = ("id", "title", "status", "event_date", "support_contact", "contract", "client")
     list_filter = ("contract", "support_contact")
 
     @admin.display(description='client')
@@ -91,7 +91,7 @@ class EventAdmin(admin.ModelAdmin):
 
     def get_fields(self, request, obj=None):
         fields = super(EventAdmin, self).get_fields(request, obj)
-        if not obj or request.user.role != "M":
+        if not obj or request.user.role in ("SA", "SU"):
             fields.remove('support_contact')
         return fields
 
