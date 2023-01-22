@@ -1,15 +1,42 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.exceptions import ValidationError
+from rest_framework.serializers import ModelSerializer, CharField
 
 from authentication.models import CustomUser
 from crm_api.models import Client, Contract, Event
+from django.contrib.auth.password_validation import validate_password
 
 
 class CustomUserListSerializer(ModelSerializer):
     """Serializes objects from :model:`authentication.CustomUser` for a list of users."""
 
+    password = CharField(write_only=True, required=True, validators=[validate_password])
+    password_confirmation = CharField(write_only=True, required=True)
+
     class Meta:
         model = CustomUser
-        fields = ["id", "username", "first_name", "last_name", "email", "role"]
+        fields = ["id", "username", "password", "password_confirmation", "first_name", "last_name", "email", "role"]
+
+    def validate(self, attrs):
+        """Validates identical passwords."""
+
+        if attrs['password'] != attrs['password_confirmation']:
+            raise ValidationError({"password": "Password fields didn't match."})
+        return attrs
+
+    def create(self, validated_data):
+        """Creates a custom user."""
+
+        user = CustomUser.objects.create(
+            username=validated_data['username'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            email=validated_data['email'],
+            role=validated_data['role']
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class ClientListSerializer(ModelSerializer):
@@ -17,7 +44,7 @@ class ClientListSerializer(ModelSerializer):
 
     class Meta:
         model = Client
-        fields = ["id", "first_name", "last_name", "sales_contact"]
+        fields = ["id", "first_name", "last_name", "email", "phone", "mobile", "company_name", "sales_contact"]
 
 
 class ClientDetailSerializer(ModelSerializer):
