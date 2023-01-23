@@ -16,12 +16,12 @@ class CustomUserListSerializer(ModelSerializer):
         model = CustomUser
         fields = ["id", "username", "password", "password_confirmation", "first_name", "last_name", "email", "role"]
 
-    def validate(self, attrs):
+    def validate(self, data):
         """Validates identical passwords."""
-
-        if attrs['password'] != attrs['password_confirmation']:
-            raise ValidationError({"password": "Password fields didn't match."})
-        return attrs
+        if self.context['request']._request.method == 'POST':
+            if data['password'] != data['password_confirmation']:
+                raise ValidationError({"password": "Password fields didn't match."})
+        return data
 
     def create(self, validated_data):
         """Creates a custom user."""

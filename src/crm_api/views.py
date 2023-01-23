@@ -37,6 +37,7 @@ class CustomUserViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = serializers.CustomUserListSerializer
     detail_serializer_class = None
     permission_classes = (DjangoModelPermissions,)
+    http_method_names = ["get", "post", "patch"]
 
     def get_queryset(self):
         """Gets all users for every staff member."""
