@@ -131,11 +131,12 @@ You can access this API's collections by importing data (File -> Import -> Link)
 
 This collection is divided into several folders:
 
-"Authentication": /login endpoints which do not need an access token.
-"Clients": /clients endpoints. Needs an access token.
-"Users": /users endpoints. Needs an access token.
-"Contracts": /contracts endpoints. Needs an access token.
-"Events": /events endpoints. Needs an access token.
+- "Authentication": /login endpoints which do not need an access token.
+- "Clients": /clients endpoints. Needs an access token.
+- "Users": /users endpoints. Needs an access token.
+- "Contracts": /contracts endpoints. Needs an access token.
+- "Events": /events endpoints. Needs an access token.
+
 For ease of use, this API collection automatically add the JWT access token to environment variables after logging with an account. 
 This variable is thus inherited by the Clients, Users, Contracts and Events folders.
 
