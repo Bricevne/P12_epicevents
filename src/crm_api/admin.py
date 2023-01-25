@@ -35,12 +35,10 @@ class ClientAdmin(admin.ModelAdmin):
         elif request.user.role == "SU":
 
             return Client.objects.filter(
-                contract__in=Contract.objects.filter(
-                    event__in=Event.objects.filter(
+                event__in=Event.objects.filter(
                         support_contact=request.user
-                    )
                 )
-            )
+            ).distinct()
         else:
             return Client.objects.all()
 
@@ -88,6 +86,8 @@ class ContractAdmin(admin.ModelAdmin):
         """Sets the sales_contact field's choices to staff users from the sales group only."""
         if db_field.name == "sales_contact":
             kwargs['queryset'] = CustomUser.objects.filter(role="SA")
+        if db_field.name == "client":
+            kwargs['queryset'] = Client.objects.filter(contract__signed=True).distinct()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -95,13 +95,8 @@ class ContractAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     """Defines how events appear in the admin panel."""
 
-    list_display = ("id", "title", "status", "event_date", "support_contact", "contract", "client")
-    list_filter = ("contract", "support_contact")
-
-    @admin.display(description='client')
-    def client(self, obj):
-        """Adds the client to the event's information in the admin panel."""
-        return obj.contract.client
+    list_display = ("id", "title", "status", "event_date", "support_contact", "client")
+    list_filter = ("client", "support_contact")
 
     def save_model(self, request, obj, form, change):
         """Sets the event's support contact to no one when creating a new event."""
@@ -110,10 +105,15 @@ class EventAdmin(admin.ModelAdmin):
         super(EventAdmin, self).save_model(request, obj, form, change)
 
     def get_fields(self, request, obj=None):
-        """Removes the support_contact field when the user is in sales or support group."""
+        """
+        Removes the support_contact field when the user is in sales or support group.
+        Also removes client for support group.
+        """
         fields = super(EventAdmin, self).get_fields(request, obj)
         if not obj or request.user.role in ("SA", "SU"):
             fields.remove('support_contact')
+        if obj and request.user.role == "SU":
+            fields.remove('client')
         return fields
 
     def get_queryset(self, request):
@@ -133,8 +133,6 @@ class EventAdmin(admin.ModelAdmin):
         Sets the contract field's choices to signed contracts only.
         Sets the support_contact field's choices to staff users from the support group only..
         """
-        if db_field.name == "contract":
-            kwargs['queryset'] = Contract.objects.filter(signed=True)
         if db_field.name == "support_contact":
             kwargs['queryset'] = CustomUser.objects.filter(role="SU")
         return super().formfield_for_foreignkey(db_field, request, **kwargs)

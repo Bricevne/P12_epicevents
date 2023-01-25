@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -22,8 +23,8 @@ class Client(models.Model):
 
 class Contract(models.Model):
     """Stores a contract, related to :model:`authentication.CustomUser`and :model:`crm_api.Client`."""
-    amount = models.IntegerField()
-    payment_due = models.DateField()
+    amount = models.FloatField()
+    payment_due = models.DateTimeField()
     signed = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
@@ -44,17 +45,24 @@ class Event(models.Model):
         IN_PROGRESS = 'I', _('In progress')
         COMPLETED = 'C', _('Completed')
 
-    title = models.CharField(max_length=25)
-    description = models.CharField(max_length=200)
-    guests = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
+    notes = models.CharField(max_length=200)
+    attendees = models.IntegerField()
     status = models.CharField(max_length=1, choices=Status.choices)
     event_date = models.DateTimeField()
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     support_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    contract = models.ForeignKey(to=Contract, on_delete=models.CASCADE, related_name='event')
+    client = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name='event')
 
     objects = models.Manager()
 
     def __str__(self):
         return f"{self.id}. {self.title} - {self.status}"
+
+    def clean(self):
+        client = self.client
+        contracts = Contract.objects.filter(client=client, signed=True)
+        events = Event.objects.filter(client=client)
+        if len(contracts) <= len(events) and not self.id:
+            raise ValidationError("This client does not have enough signed contracts to create a new event.")
