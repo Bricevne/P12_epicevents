@@ -11,12 +11,30 @@ a requirements.txt file listing all the necessary packages for this project
 
 a .gitignore file
 
+a log folder with an errors.log file for error loggings.
+
 a src folder containing:
 
 - a manage.py which permits a command-line utility that works similar to the django-admin command.
 - an eventmanager folder with all the applications' settings and urls.
 - an authentication app responsible for the definition of users and their authentication.
 - a crm_api app responsible for the full API.
+
+## Database
+
+This app works with PostgreSQL as a database.
+
+If you do not have it on your computer, you can follow the process on this link:
+
+```bash
+https://www.postgresql.org/download/
+```
+
+Once it is installed on your computer, create a new database with the following parameters:
+
+- Database name: event_manager
+- Host: 127.0.0.1
+- Port: 5432
 
 ## Installation
 
@@ -54,6 +72,12 @@ Export your postgresql app path in order to access the postgresql server.
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 ```
 
+You can then make the migrations:
+
+```bash
+python manage.py migrate
+```
+
 ## Launch the local server
 
 In the src folder run the following code to access the web application:
@@ -63,22 +87,6 @@ python manage.py runserver # Start the local server
 ```
 
 You can now open your navigator with the URL 'http://127.0.0.1:5000/admin' to access the administration.
-
-## Database
-
-This app works with PostgreSQL as a database.
-
-If you do not have it on your computer, you can follow the process on this link:
-
-```bash
-https://www.postgresql.org/download/
-```
-
-Once it is installed on your computer, create a new database with the following parameters:
-
-- Database name: event_manager
-- Host: 127.0.0.1
-- Port: 5432
 
 ## Use Postman to test the API's endpoints
 
@@ -116,17 +124,17 @@ Here are the available urls:
 - /users/:user_id : Detail of a user
 - /clients : List of clients
 - /clients/:client_id : Detail of a client
-- /clients/:client_id/contracts : List of contracts
-- /clients/:client_id/contracts/:contract_id : Detail of a contract
-- /clients/:client_id/contracts/:contract_id/events : List of events
-- /clients/:client_id/contracts/:contract_id/events/:event_id : Detail of an event
+- /clients/:client_id/contracts : List of contracts of a client
+- /clients/:client_id/contracts/:contract_id : Detail of a contract of a client
+- /clients/:client_id/events : List of events of  client
+- /clients/:client_id/events/:event_id : Detail of an event of a client
 
 ### Collection test
 
 You can access this API's collections by importing data (File -> Import -> Link) with the following link:
 
 ```bash
-
+https://documenter.getpostman.com/view/18689622/2s8ZDeUeR7
 ```
 
 This collection is divided into several folders:
