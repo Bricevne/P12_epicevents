@@ -18,7 +18,8 @@ class CustomUserListSerializer(ModelSerializer):
 
     def validate(self, data):
         """Validates identical passwords."""
-        if self.context['request']._request.method == 'POST':
+        if self.context['request']._request.method == 'POST' or \
+            (self.context['request']._request.method == 'PATCH' and "password_confirmation" in data.keys()):
             if data['password'] != data['password_confirmation']:
                 raise ValidationError({"password": "Password fields didn't match."})
         return data
@@ -38,6 +39,13 @@ class CustomUserListSerializer(ModelSerializer):
         user.save()
         return user
 
+    def update(self, instance, validated_data):
+        """Updates a custom user."""
+        super().update(instance, validated_data)
+        if "password" in validated_data.keys():
+            instance.set_password(validated_data['password'])
+            instance.save()
+        return instance
 
 class ClientListSerializer(ModelSerializer):
     """Serializes objects from :model:`crm_api.Client` for a list of clients."""
@@ -63,13 +71,20 @@ class ClientDetailSerializer(ModelSerializer):
             "date_created",
             "date_updated",
             "sales_contact_id",
-            "contract"
+            "contract",
+            "client_event"
         ]
 
     def get_contract(self, instance):
         """Gets the list of existing contracts for a particular client."""
         queryset = instance.comment.all()
         serializer = ContractListSerializer(queryset, many=True)
+        return serializer.data
+
+    def get_client_event(self, instance):
+        """Gets the list of existing contracts for a particular client."""
+        queryset = instance.comment.all()
+        serializer = EventListSerializer(queryset, many=True)
         return serializer.data
 
 
@@ -95,33 +110,8 @@ class ContractDetailSerializer(ModelSerializer):
             "date_updated",
             "sales_contact_id",
             "client_id",
-            "event",
+            "contract_event"
         ]
-
-    def get_event(self, instance):
-        """Gets the list of existing events for a particular contract."""
-        queryset = instance.event.all()
-        serializer = EventListSerializer(queryset, many=True)
-        return serializer.data
-
-
-class ContractSupportSerializer(ModelSerializer):
-    """Serializes objects from :model:`crm_api.Contract` for contracts when the
-    requesting user is from the support group.
-    """
-
-    class Meta:
-        model = Contract
-        fields = [
-            "id",
-            "event",
-        ]
-
-    def get_event(self, instance):
-        """Gets the list of existing events for a particular contract."""
-        queryset = instance.event.all()
-        serializer = EventListSerializer(queryset, many=True)
-        return serializer.data
 
 
 class EventListSerializer(ModelSerializer):
@@ -129,7 +119,7 @@ class EventListSerializer(ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ["id", "title", "description", "guests", "status", "event_date", "support_contact_id", "contract_id"]
+        fields = ["id", "title", "notes", "attendees", "status", "event_date", "support_contact_id", "client_id", "contract_id"]
 
 
 class EventDetailSerializer(ModelSerializer):
@@ -140,12 +130,13 @@ class EventDetailSerializer(ModelSerializer):
         fields = [
             "id",
             "title",
-            "description",
-            "guests",
+            "notes",
+            "attendees",
             "status",
             "event_date",
             "date_created",
             "date_updated",
             "support_contact_id",
-            "contract_id",
+            "client_id",
+            "contract_id"
         ]

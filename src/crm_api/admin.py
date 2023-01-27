@@ -35,7 +35,7 @@ class ClientAdmin(admin.ModelAdmin):
         elif request.user.role == "SU":
 
             return Client.objects.filter(
-                event__in=Event.objects.filter(
+                client_event__in=Event.objects.filter(
                         support_contact=request.user
                 )
             ).distinct()
@@ -83,11 +83,14 @@ class ContractAdmin(admin.ModelAdmin):
             return Contract.objects.all()
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """Sets the sales_contact field's choices to staff users from the sales group only."""
+        """
+        Sets the sales_contact field's choices to staff users from the sales group only
+        and client's choices from the ones the user is responsible for.
+        """
         if db_field.name == "sales_contact":
             kwargs['queryset'] = CustomUser.objects.filter(role="SA")
-        if db_field.name == "client":
-            kwargs['queryset'] = Client.objects.filter(contract__signed=True).distinct()
+        if db_field.name == "client" and request.user.role == "SA":
+            kwargs['queryset'] = Client.objects.filter(sales_contact=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -95,8 +98,8 @@ class ContractAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     """Defines how events appear in the admin panel."""
 
-    list_display = ("id", "title", "status", "event_date", "support_contact", "client")
-    list_filter = ("client", "support_contact")
+    list_display = ("id", "title", "status", "event_date", "support_contact", "contract", "client")
+    list_filter = ("client", "contract", "support_contact")
 
     def save_model(self, request, obj, form, change):
         """Sets the event's support contact to no one when creating a new event."""
@@ -107,13 +110,14 @@ class EventAdmin(admin.ModelAdmin):
     def get_fields(self, request, obj=None):
         """
         Removes the support_contact field when the user is in sales or support group.
-        Also removes client for support group.
+        Also removes client and contract for support group.
         """
         fields = super(EventAdmin, self).get_fields(request, obj)
         if not obj or request.user.role in ("SA", "SU"):
             fields.remove('support_contact')
         if obj and request.user.role == "SU":
             fields.remove('client')
+            fields.remove('contract')
         return fields
 
     def get_queryset(self, request):
@@ -131,8 +135,21 @@ class EventAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         """
         Sets the contract field's choices to signed contracts only.
-        Sets the support_contact field's choices to staff users from the support group only..
+        Sets the support_contact field's choices to staff users from the support group only.
+        When creating a new event, show only contracts which are signed but with no event yet.
         """
         if db_field.name == "support_contact":
             kwargs['queryset'] = CustomUser.objects.filter(role="SU")
+
+        if db_field.name == "client" and request.user.role == "SA":
+            kwargs['queryset'] = Client.objects.filter(contract__signed=True, sales_contact=request.user).distinct()
+        elif db_field.name == "client":
+            kwargs['queryset'] = Client.objects.filter(contract__signed=True).distinct()
+
+        if db_field.name == "contract" and '/add/' in request.path and request.user.role == "SA":
+            kwargs['queryset'] = Contract.objects.filter(signed=True, contract_event__isnull=True, sales_contact=request.user)
+        elif db_field.name == "contract" and '/add/' in request.path:
+            kwargs['queryset'] = Contract.objects.filter(signed=True, contract_event__isnull=True)
+        elif db_field.name == "contract":
+            kwargs['queryset'] = Contract.objects.filter(signed=True)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)

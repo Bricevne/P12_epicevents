@@ -34,11 +34,13 @@ class Contract(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.id} - {self.signed}"
+        return f"{self.id} - {self.client.first_name} {self.client.last_name} - {self.amount} - {self.signed}"
 
 
 class Event(models.Model):
-    """Stores an event, related to :model:`authentication.CustomUser`and :model:`crm_api.Contract`."""
+    """Stores an event, related to :model:`authentication.CustomUser`,
+     :model:`crm_api.Client` and :model:`crm_api.Contract`.
+     """
 
     class Status(models.TextChoices):
         TO_DO = 'T', _('To do')
@@ -53,16 +55,10 @@ class Event(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     support_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    client = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name='event')
+    client = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name='client_event')
+    contract = models.ForeignKey(to=Contract, on_delete=models.CASCADE, related_name='contract_event')
 
     objects = models.Manager()
 
     def __str__(self):
         return f"{self.id}. {self.title} - {self.status}"
-
-    def clean(self):
-        client = self.client
-        contracts = Contract.objects.filter(client=client, signed=True)
-        events = Event.objects.filter(client=client)
-        if len(contracts) <= len(events) and not self.id:
-            raise ValidationError("This client does not have enough signed contracts to create a new event.")

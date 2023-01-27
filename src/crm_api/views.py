@@ -11,7 +11,6 @@ from crm_api.models import Client, Contract, Event
 class MultipleSerializerMixin:
     """Allows the modification of a serializer_class in ViewSets."""
     detail_serializer_class = None
-    support_serializer_class = None
 
     def get_serializer_class(self):
         """Replaces standard serializer_class by another serializer class.
@@ -19,8 +18,7 @@ class MultipleSerializerMixin:
         support_serializer_class: When the requesting user is a support staff. (Only for contracts)
         detail_serializer_class: When retrieving a particular serialized object.
          """
-        if self.support_serializer_class is not None and self.request.user.role == "SU":
-            return self.support_serializer_class
+
         if self.action == 'retrieve' and self.detail_serializer_class is not None:
             return self.detail_serializer_class
         return super().get_serializer_class()
@@ -68,10 +66,8 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
             return Client.objects.filter(sales_contact=self.request.user)
         elif self.request.user.role == "SU":
             return Client.objects.filter(
-                contract__in=Contract.objects.filter(
-                    event__in=Event.objects.filter(
-                        support_contact=self.request.user
-                    )
+                client_event__in=Event.objects.filter(
+                    support_contact=self.request.user
                 ).distinct("client")
             )
         else:
@@ -97,12 +93,12 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
         else:
             sales_contact = CustomUser.objects.get(pk=sales_contact_pk)
             if self.request.user.role == "SU":
-                raise ValidationError(f"You do not have permissions to change the sales contact.")
+                raise ValidationError({"detail": f"You do not have permissions to change the sales contact."})
             elif self.request.user.role == "SA":
                 serializer.save(sales_contact=self.request.user)
             else:
                 if not sales_contact.role == "SA":
-                    raise ValidationError(f"User {sales_contact.id} is not a sales staff.")
+                    raise ValidationError({"detail": f"User {sales_contact.id} is not a sales staff."})
                 else:
                     serializer.save(sales_contact=sales_contact)
 
@@ -112,14 +108,11 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
 
     Manages the following endpoints:
     /clients/:client_id/contracts
-    /clients/:client_id/contracts/:contract_id
-
-    Limits contract information for support staff with ContractSupportSerializer.
+    /clients/:client_id/contracts/:contract_id.
     """
 
     serializer_class = serializers.ContractListSerializer
     detail_serializer_class = serializers.ContractDetailSerializer
-    support_serializer_class = serializers.ContractSupportSerializer
     permission_classes = (DjangoModelPermissions,)
     http_method_names = ["get", "post", "patch"]
 
@@ -128,17 +121,12 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
 
         Management and superusers: all contracts from the client.
         Sales: all contracts from the client whose sales contact is the user.
-        Support: contracts corresponding to the events they are responsible for. Allowed information: id only.
+        Support: no contract.
         """
         if self.request.user.role == "SA":
             return Contract.objects.filter(client_id=self.kwargs['client_pk'], sales_contact=self.request.user)
         elif self.request.user.role == "SU":
-            return Contract.objects.filter(
-                client_id=self.kwargs['client_pk'],
-                event__in=Event.objects.filter(
-                    support_contact=self.request.user
-                    ).distinct("contract")
-                )
+            raise ValidationError({'detail': "You do not have permission"})
         else:
             return Contract.objects.filter(client_id=self.kwargs['client_pk'])
 
@@ -150,7 +138,7 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
         """
         client = get_object_or_404(Client, pk=self.kwargs['client_pk'])
         if client.sales_contact != self.request.user:
-            raise ValidationError("You are not responsible for this client.")
+            raise ValidationError({"detail": "You are not responsible for this client."})
         else:
             serializer.save(sales_contact=self.request.user, client=client)
 
@@ -167,12 +155,12 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
         else:
             sales_contact = CustomUser.objects.get(pk=sales_contact_pk)
             if self.request.user.role == "SU":
-                raise ValidationError(f"You do not have permissions to change the sales contact.")
+                raise ValidationError({"detail": f"You do not have permissions to change the sales contact."})
             elif self.request.user.role == "SA":
                 serializer.save(sales_contact=self.request.user)
             else:
                 if not sales_contact.role == "SA":
-                    raise ValidationError(f"User {sales_contact.id} is not a sales staff.")
+                    raise ValidationError({"detail": f"User {sales_contact.id} is not a sales staff."})
                 else:
                     serializer.save(sales_contact=sales_contact)
 
@@ -193,29 +181,31 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
 
-        Management and superusers: all events associated to the contract.
-        Sales: none as they do not have group permissions to access events apart from creating them.
-        Support: all events (associated to the contract) whose support contact is the user.
+        Management and superusers: all events associated to the client.
+        Sales: no event.
+        Support: all events (associated to the client) whose support contact is the user.
         """
         if self.request.user.role == "SU":
-            return Event.objects.filter(contract_id=self.kwargs['contract_pk'], support_contact=self.request.user)
-        elif self.request.user.role == "SA":
-            return Event.objects.none()
+            return Event.objects.filter(client_id=self.kwargs['client_pk'], support_contact=self.request.user)
+        elif self.request.user.role == "SA" and self.request.method != "POST":
+            raise ValidationError({'detail': "You do not have permission"})
         else:
-            return Event.objects.filter(contract_id=self.kwargs['contract_pk'])
+            return Event.objects.filter(client_id=self.kwargs['client_pk'])
 
     def perform_create(self, serializer):
         """Defines the [POST] method for an event. Accessible only for sales staff.
 
         Sets automatically the support_contact to None.
         """
-        contract = get_object_or_404(Contract, pk=self.kwargs['contract_pk'])
+        client = get_object_or_404(Client, pk=self.kwargs['client_pk'])
+        contract_id = self.request.data.get("contract_id")
+        contract = get_object_or_404(Contract, pk=contract_id)
+        if client.sales_contact != self.request.user:
+            raise ValidationError({"detail": "You are not responsible for this client."})
         if contract.signed is False:
-            raise ValidationError("The contract needs to be signed in order to create an event.")
-        if contract.sales_contact != self.request.user:
-            raise ValidationError("You are not responsible for this contract.")
+            raise ValidationError({"detail": "The contract needs to be signed in order to create an event."})
         else:
-            serializer.save(support_contact=None, contract=contract)
+            serializer.save(support_contact=None, client_id=self.kwargs['client_pk'], contract_id=contract_id)
 
     def perform_update(self, serializer):
         """Re-defines the [PATCH] method for a contract. Accessible only for support, management staff and superusers.
@@ -230,9 +220,9 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
         else:
             support_contact = CustomUser.objects.get(pk=support_contact_pk)
             if self.request.user.role in ('SU', 'SA'):
-                raise ValidationError(f"You do not have permissions to change the support contact.")
+                raise ValidationError({"detail": f"You do not have permissions to change the support contact."})
             else:
                 if support_contact.role != "SU":
-                    raise ValidationError(f"User {support_contact.id} is not a support staff.")
+                    raise ValidationError({"detail": f"User {support_contact.id} is not a support staff."})
                 else:
                     serializer.save(support_contact=support_contact)
