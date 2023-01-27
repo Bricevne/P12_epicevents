@@ -84,9 +84,11 @@ WSGI_APPLICATION = 'eventmanager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'event_manager',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'NAME': os.getenv("PSQL_NAME"),
+        'USER': os.getenv("PSQL_USER"),
+        'PASSWORD': os.getenv("PSQL_PASSWORD"),
+        'HOST': os.getenv("PSQL_HOST"),
+        'PORT': os.getenv("PSQL_PORT")
     }
 }
 
