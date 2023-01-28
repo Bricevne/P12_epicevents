@@ -85,9 +85,10 @@ export your postgresql app path in order to access the postgresql server.
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 ```
 
-You can then make the migrations:
+In the src folder you can then make the migrations in the following order:
 
 ```bash
+python manage.py migrate crm_api
 python manage.py migrate
 ```
 
