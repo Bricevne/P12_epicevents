@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.serializers import ValidationError
-from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
 from authentication.models import CustomUser
 from crm_api import serializers
 from crm_api.filters import ClientFilter, CustomUserFilter, ContractFilter, EventFilter
 from crm_api.models import Client, Contract, Event
+from crm_api.permissions import StaffPermission
 
 
 class MultipleSerializerMixin:
@@ -35,9 +35,10 @@ class CustomUserViewset(MultipleSerializerMixin, ModelViewSet):
 
     serializer_class = serializers.CustomUserListSerializer
     detail_serializer_class = None
-    permission_classes = (DjangoModelPermissions,)
+    permission_classes = (StaffPermission,)
     http_method_names = ["get", "post", "patch"]
     filterset_class = CustomUserFilter
+    perm_slug = "authentication.customuser"
 
     def get_queryset(self):
         """Gets all users for every staff member."""
@@ -54,9 +55,10 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
 
     serializer_class = serializers.ClientListSerializer
     detail_serializer_class = serializers.ClientDetailSerializer
-    permission_classes = (DjangoModelPermissions,)
+    permission_classes = (StaffPermission,)
     http_method_names = ["get", "post", "patch", "options", "head"]
     filterset_class = ClientFilter
+    perm_slug = "crm_api.client"
 
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
@@ -116,9 +118,11 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
 
     serializer_class = serializers.ContractListSerializer
     detail_serializer_class = serializers.ContractDetailSerializer
-    permission_classes = (DjangoModelPermissions,)
+    permission_classes = (StaffPermission,)
     http_method_names = ["get", "post", "patch"]
     filterset_class = ContractFilter
+    perm_slug = "crm_api.contract"
+
 
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
@@ -129,8 +133,6 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
         """
         if self.request.user.role == "SA":
             return Contract.objects.filter(client_id=self.kwargs['client_pk'], sales_contact=self.request.user)
-        elif self.request.user.role == "SU":
-            raise ValidationError({'detail': "You do not have permission"})
         else:
             return Contract.objects.filter(client_id=self.kwargs['client_pk'])
 
@@ -179,9 +181,10 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
 
     serializer_class = serializers.EventListSerializer
     detail_serializer_class = serializers.EventDetailSerializer
-    permission_classes = (DjangoModelPermissions,)
+    permission_classes = (StaffPermission,)
     http_method_names = ["get", "post", "patch"]
     filterset_class = EventFilter
+    perm_slug = "crm_api.event"
 
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
@@ -192,8 +195,6 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
         """
         if self.request.user.role == "SU":
             return Event.objects.filter(client_id=self.kwargs['client_pk'], support_contact=self.request.user)
-        elif self.request.user.role == "SA" and self.request.method != "POST":
-            raise ValidationError({'detail': "You do not have permission"})
         else:
             return Event.objects.filter(client_id=self.kwargs['client_pk'])
 
