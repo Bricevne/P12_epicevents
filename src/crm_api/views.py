@@ -36,7 +36,7 @@ class CustomUserViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = serializers.CustomUserListSerializer
     detail_serializer_class = None
     permission_classes = (StaffPermission,)
-    http_method_names = ["get", "post", "patch"]
+    http_method_names = ["get", "post", "patch", "delete"]
     filterset_class = CustomUserFilter
     perm_slug = "authentication.customuser"
 
@@ -56,7 +56,7 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = serializers.ClientListSerializer
     detail_serializer_class = serializers.ClientDetailSerializer
     permission_classes = (StaffPermission,)
-    http_method_names = ["get", "post", "patch", "options", "head"]
+    http_method_names = ["get", "post", "patch", "delete"]
     filterset_class = ClientFilter
     perm_slug = "crm_api.client"
 
@@ -119,7 +119,7 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = serializers.ContractListSerializer
     detail_serializer_class = serializers.ContractDetailSerializer
     permission_classes = (StaffPermission,)
-    http_method_names = ["get", "post", "patch"]
+    http_method_names = ["get", "post", "patch", "delete"]
     filterset_class = ContractFilter
     perm_slug = "crm_api.contract"
 

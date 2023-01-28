@@ -3,7 +3,7 @@ from rest_framework.permissions import BasePermission
 
 
 class StaffPermission(BasePermission):
-    message = "You do not have permission to perform action"
+    message = "You do not have permission to perform this action"
     permission_map = {
         "GET": "{app_label}.view_{model_name}",
         "POST": "{app_label}.add_{model_name}",
