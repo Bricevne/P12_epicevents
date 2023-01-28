@@ -32,9 +32,16 @@ https://www.postgresql.org/download/
 
 Once it is installed on your computer, create a new database with the following parameters:
 
-- Database name: event_manager
-- Host: 127.0.0.1
-- Port: 5432
+```bash
+CREATE DATABASE event_manager;
+CREATE USER epic_events WITH PASSWORD 'epic_events';
+ALTER USER epic_events CREATEDB;
+ALTER ROLE epic_events SET client_encoding TO 'utf8';
+ALTER ROLE epic_events SET default_transaction_isolation TO 'read committed';
+ALTER ROLE epic_events SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE event_manager TO epic_events;
+\q
+```
 
 ## Installation
 
@@ -60,13 +67,19 @@ Create a file where you'll put the django secret key:
 touch .env # File for environment variables
 ```
 
-Insert your django secret key in the .env file
+Insert your django secret key in the .env file, as well as the parameters of your database:
 
 ```bash
-DJANGO_SECRET_KEY="DJANGO_SECRET_KEY"
+DJANGO_SECRET_KEY="YOUR_DJANGO_SECRET_KEY"
+PSQL_NAME="event_manager"
+PSQL_USER="epic_events"
+PSQL_PASSWORD="epic_events"
+PSQL_HOST="127.0.0.1"
+PSQL_PORT="5432"
 ```
 
-Export your postgresql app path in order to access the postgresql server.
+If you discover difficulties using psql on Mac,
+export your postgresql app path in order to access the postgresql server.
 
 ```bash
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
@@ -76,6 +89,12 @@ You can then make the migrations:
 
 ```bash
 python manage.py migrate
+```
+
+Now create a superuser:
+
+```bash
+python manage.py createsuperuser
 ```
 
 ## Launch the local server
