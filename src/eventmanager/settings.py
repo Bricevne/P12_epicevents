@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'authentication',
     'crm_api',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -143,7 +144,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 

@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from authentication.models import CustomUser
 from crm_api import serializers
+from crm_api.filters import ClientFilter, CustomUserFilter, ContractFilter, EventFilter
 from crm_api.models import Client, Contract, Event
 
 
@@ -36,6 +37,7 @@ class CustomUserViewset(MultipleSerializerMixin, ModelViewSet):
     detail_serializer_class = None
     permission_classes = (DjangoModelPermissions,)
     http_method_names = ["get", "post", "patch"]
+    filterset_class = CustomUserFilter
 
     def get_queryset(self):
         """Gets all users for every staff member."""
@@ -53,7 +55,8 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = serializers.ClientListSerializer
     detail_serializer_class = serializers.ClientDetailSerializer
     permission_classes = (DjangoModelPermissions,)
-    http_method_names = ["get", "post", "patch"]
+    http_method_names = ["get", "post", "patch", "options", "head"]
+    filterset_class = ClientFilter
 
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
@@ -115,6 +118,7 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
     detail_serializer_class = serializers.ContractDetailSerializer
     permission_classes = (DjangoModelPermissions,)
     http_method_names = ["get", "post", "patch"]
+    filterset_class = ContractFilter
 
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
@@ -177,6 +181,7 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
     detail_serializer_class = serializers.EventDetailSerializer
     permission_classes = (DjangoModelPermissions,)
     http_method_names = ["get", "post", "patch"]
+    filterset_class = EventFilter
 
     def get_queryset(self):
         """Gets the suitable queryset depending on the user's group.
