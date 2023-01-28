@@ -182,7 +182,7 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = serializers.EventListSerializer
     detail_serializer_class = serializers.EventDetailSerializer
     permission_classes = (StaffPermission,)
-    http_method_names = ["get", "post", "patch"]
+    http_method_names = ["get", "post", "patch", "delete"]
     filterset_class = EventFilter
     perm_slug = "crm_api.event"
 
