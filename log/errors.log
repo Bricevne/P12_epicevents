@@ -1822,3 +1822,632 @@ Traceback (most recent call last):
   File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
     raise e.__class__(
 ValueError: Field 'id' expected a number but got '<integer>'.
+Watching for file changes with StatReloader
+Bad Request: /clients/1/contracts/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/1/contracts/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/1/contracts/
+Forbidden: /clients/1/events/
+Forbidden: /clients/1/events/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/1/contracts/
+Forbidden: /clients/1/contracts/
+Forbidden: /clients/1/contracts/
+Forbidden: /clients/1/contracts/
+Forbidden: /clients/<integer>/contracts/
+Forbidden: /clients/<integer>/contracts/<integer>/
+Forbidden: /clients/<integer>/contracts/<integer>/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/<integer>/events/
+Forbidden: /clients/1/events/
+Bad Request: /clients/<integer>/events/
+Forbidden: /clients/<integer>/events/<integer>/
+Forbidden: /clients/<integer>/events/<integer>/
+Forbidden: /users/
+Forbidden: /clients/<integer>/events/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /clients/<integer>/events/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 415, in initial
+    self.check_permissions(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 332, in check_permissions
+    if not permission.has_permission(request, self):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/permissions.py", line 232, in has_permission
+    queryset = self._queryset(view)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/permissions.py", line 215, in _queryset
+    queryset = view.get_queryset()
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 201, in get_queryset
+    return Event.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/1/events/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/permissions.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/1/events/
+Forbidden: /users/
+Forbidden: /users/<integer>/
+Not Found: /clients/5/
+Internal Server Error: /clients/<integer>/contracts/<integer>/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 82, in partial_update
+    return self.update(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 65, in update
+    instance = self.get_object()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/generics.py", line 83, in get_object
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 137, in get_queryset
+    return Contract.objects.filter(client_id=self.kwargs['client_pk'], sales_contact=self.request.user)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Forbidden: /clients/1/events/
+Bad Request: /clients/<integer>/events/
+Forbidden: /clients/<integer>/events/<integer>/
+Forbidden: /clients/<integer>/events/<integer>/
+Forbidden: /clients/<integer>/contracts/
+Forbidden: /clients/<integer>/contracts/
+Forbidden: /clients/<integer>/contracts/<integer>/
+Forbidden: /clients/<integer>/contracts/<integer>/
+Forbidden: /users/
+Forbidden: /users/<integer>/
+Forbidden: /clients/<integer>/events/
+Internal Server Error: /clients/<integer>/events/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 199, in get_queryset
+    return Event.objects.filter(client_id=self.kwargs['client_pk'], support_contact=self.request.user)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Internal Server Error: /clients/<integer>/events/<integer>/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 82, in partial_update
+    return self.update(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 65, in update
+    instance = self.get_object()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/generics.py", line 83, in get_object
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 199, in get_queryset
+    return Event.objects.filter(client_id=self.kwargs['client_pk'], support_contact=self.request.user)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Forbidden: /clients/<integer>/contracts/
+Internal Server Error: /clients/<integer>/contracts/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 139, in get_queryset
+    return Contract.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Forbidden: /clients/
+Bad Request: /clients/5/
+Forbidden: /clients/<integer>/events/
+Internal Server Error: /clients/<integer>/events/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 201, in get_queryset
+    return Event.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Internal Server Error: /clients/<integer>/events/<integer>/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 82, in partial_update
+    return self.update(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 65, in update
+    instance = self.get_object()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/generics.py", line 83, in get_object
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 201, in get_queryset
+    return Event.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/permissions.py changed, reloading.
+Watching for file changes with StatReloader
+Unauthorized: /login/
+Not Found: /clients/<integer>/
+Bad Request: /clients/5/
+Internal Server Error: /clients/<integer>/contracts/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 139, in get_queryset
+    return Contract.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Bad Request: /clients/<integer>/contracts/
+Internal Server Error: /clients/<integer>/contracts/<integer>/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 82, in partial_update
+    return self.update(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 65, in update
+    instance = self.get_object()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/generics.py", line 83, in get_object
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 139, in get_queryset
+    return Contract.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+Internal Server Error: /clients/<integer>/events/
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '<integer>'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py", line 201, in get_queryset
+    return Event.objects.filter(client_id=self.kwargs['client_pk'])
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/Users/bricevenayre/.local/share/virtualenvs/P12_epicevents-LJlfhQ_f/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got '<integer>'.
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/views.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/permissions.py changed, reloading.
+Watching for file changes with StatReloader
+Method Not Allowed: /users/<integer>/
+Not Found: /users/<integer>/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/permissions.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/crm_api/permissions.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /clients/<integer>/events/
+Forbidden: /clients/<integer>/events/<integer>/
+/Users/bricevenayre/Documents/Work/Open Classrooms/P12_epicevents/src/eventmanager/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /
+Not Found: /
