@@ -95,13 +95,11 @@ class ClientViewset(MultipleSerializerMixin, ModelViewSet):
         try:
             sales_contact_pk = serializer._kwargs['data']['sales_contact']
         except KeyError:
-            serializer.save()
+            super().perform_update(serializer)
         else:
             sales_contact = CustomUser.objects.get(pk=sales_contact_pk)
-            if self.request.user.role == "SU":
-                raise ValidationError({"detail": f"You do not have permissions to change the sales contact."})
-            elif self.request.user.role == "SA":
-                serializer.save(sales_contact=self.request.user)
+            if self.request.user.role == "SA":
+                raise ValidationError({"detail": "You do not have permissions to change the sales contact."})
             else:
                 if not sales_contact.role == "SA":
                     raise ValidationError({"detail": f"User {sales_contact.id} is not a sales staff."})
