@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from rest_framework.serializers import ValidationError
 from rest_framework.viewsets import ModelViewSet
@@ -154,29 +155,54 @@ class ContractViewset(MultipleSerializerMixin, ModelViewSet):
         Modification: allows the change of the specified sales contact Foreign Key to another sales staff member.
         Accessible only to management staff and superusers.
         """
+        sales_contact = ""
+        client = ""
+
         try:
-            sales_contact_pk = serializer._kwargs['data']['sales_contact']
+            sales_contact_pk = serializer._kwargs['data']['sales_contact_id']
         except KeyError:
-            serializer.save()
+            pass
         else:
-            sales_contact = CustomUser.objects.get(pk=sales_contact_pk)
-            if self.request.user.role == "SU":
-                raise ValidationError({"detail": f"You do not have permissions to change the sales contact."})
-            elif self.request.user.role == "SA":
-                serializer.save(sales_contact=self.request.user)
+            sales_contact = get_object_or_404(CustomUser, pk=sales_contact_pk)
+
+        try:
+            client_pk = serializer._kwargs['data']['client_id']
+        except KeyError:
+            pass
+        else:
+            client = get_object_or_404(Client, pk=client_pk)
+
+        if sales_contact and self.request.user.role == "SA":
+            raise ValidationError({"detail": "You do not have permissions to change the sales contact."})
+
+        if sales_contact and client:
+            if self.request.user.role == "SA" and client not in self.request.user.client:
+                raise ValidationError({
+                    "detail": "You do not have permissions to change the contract to a client you don't have."
+                })
+            if sales_contact.role != "SA":
+                raise ValidationError({"detail": f"User {sales_contact.id} is not a sales staff."})
+            serializer.save(sales_contact=sales_contact, client=client)
+        elif sales_contact and not client:
+            if not sales_contact.role == "SA":
+                raise ValidationError({"detail": f"User {sales_contact.id} is not a sales staff."})
+            serializer.save(sales_contact=sales_contact)
+
+        elif not sales_contact and client:
+            if self.request.user.role == "SA" and client not in self.request.user.client.all():
+                raise ValidationError({"detail": f"You do not have permissions to change the contract to a client you don't have."})
             else:
-                if not sales_contact.role == "SA":
-                    raise ValidationError({"detail": f"User {sales_contact.id} is not a sales staff."})
-                else:
-                    serializer.save(sales_contact=sales_contact)
+                serializer.save(client=client)
+        else:
+            super().perform_update(serializer)
 
 
 class EventViewset(MultipleSerializerMixin, ModelViewSet):
     """Displays events from :model:`crm_api.Event`.
 
     Manages the following endpoints:
-    /clients/:client_id/contracts/:contract_id/events
-    /clients/:client_id/contracts/:contract_id/events/:event_id
+    /clients/:client_id/events
+    /clients/:client_id/events/:event_id
     """
 
     serializer_class = serializers.EventListSerializer
@@ -210,6 +236,8 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
             raise ValidationError({"detail": "You are not responsible for this client."})
         if contract.signed is False:
             raise ValidationError({"detail": "The contract needs to be signed in order to create an event."})
+        if contract.contract_event.count() == 1:
+            raise ValidationError({"detail": "There is already an event for this contract."})
         else:
             serializer.save(support_contact=None, client_id=self.kwargs['client_pk'], contract_id=contract_id)
 
@@ -219,16 +247,64 @@ class EventViewset(MultipleSerializerMixin, ModelViewSet):
         Modification: allows the change of the specified support_contact Foreign Key to another support staff member.
         Accessible only to management staff and superusers.
         """
+
+        support_contact = ""
+        client = ""
+        contract = ""
+
         try:
-            support_contact_pk = serializer._kwargs['data']['support_contact']
+            support_contact_pk = serializer._kwargs['data']['support_contact_id']
         except KeyError:
-            serializer.save()
+            pass
         else:
-            support_contact = CustomUser.objects.get(pk=support_contact_pk)
-            if self.request.user.role in ('SU', 'SA'):
-                raise ValidationError({"detail": f"You do not have permissions to change the support contact."})
-            else:
+            support_contact = get_object_or_404(CustomUser, pk=support_contact_pk)
+
+        try:
+            client_pk = serializer._kwargs['data']['client_id']
+        except KeyError:
+            pass
+        else:
+            client = get_object_or_404(Client, pk=client_pk)
+
+        try:
+            contract_pk = serializer._kwargs['data']['contract_id']
+        except KeyError:
+            pass
+        else:
+            contract = get_object_or_404(Contract, pk=contract_pk)
+
+        if self.request.user.role == "SU" and (contract or client or support_contact):
+            raise ValidationError("You can't change the contract id, client id or support contact")
+        elif self.request.user.role == "SU":
+            super().perform_update(serializer)
+        else:
+            if support_contact:
                 if support_contact.role != "SU":
                     raise ValidationError({"detail": f"User {support_contact.id} is not a support staff."})
-                else:
+
+            if contract:
+                if contract.signed is False:
+                    raise ValidationError({"detail": f"This contract is not signed."})
+                if client:
+                    if contract.client != client:
+                        raise ValidationError({"detail": f"This contract is not attributed to this client."})
+
+            try:
+                if support_contact and contract and client:
+                    serializer.save(support_contact=support_contact, contract=contract, client=client)
+                elif support_contact and contract and not client:
+                    serializer.save(support_contact=support_contact, contract=contract)
+                elif support_contact and not contract and client:
+                    serializer.save(support_contact=support_contact, client=client)
+                elif not support_contact and contract and client:
+                    serializer.save(contract=contract, client=client)
+                elif not support_contact and not contract and client:
+                    serializer.save(client=client)
+                elif support_contact and not contract and not client:
                     serializer.save(support_contact=support_contact)
+                elif not support_contact and contract and not client:
+                    serializer.save(contract=contract)
+                else:
+                    super().perform_update(serializer)
+            except IntegrityError:
+                raise ValidationError({"detail": "This contract already has an event"})
