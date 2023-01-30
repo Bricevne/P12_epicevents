@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -15,7 +14,12 @@ class Client(models.Model):
     company_name = models.CharField(max_length=250)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    sales_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    sales_contact = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="client"
+    )
 
     def __str__(self):
         return f"{self.id}. {self.first_name} {self.last_name} - {self.company_name}"
@@ -56,7 +60,7 @@ class Event(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     support_contact = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name='client_event')
-    contract = models.ForeignKey(to=Contract, on_delete=models.CASCADE, related_name='contract_event')
+    contract = models.ForeignKey(to=Contract, on_delete=models.CASCADE, related_name='contract_event', unique=True)
 
     objects = models.Manager()
 
